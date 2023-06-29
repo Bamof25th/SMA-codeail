@@ -1,21 +1,21 @@
 
-<header>
+<header class="header">
     
-    Page Header
-<ul>
+    CODEIEL
+<ul class = "nav-head">
     <% if (locals.user){ %>
 
        <li><%= user.name %></li>
        <li>
-        <a href="/users/sign-out">Sign Out</a>
+        <a href="/users/sign-out" class="sign" >Sign Out</a>
        </li>
 
     <% }else{ %>
         <li>
-            <a href="/users/sign-in">Sign In</a>
+            <a href="/users/sign-in" class="sign">Sign In</a>
            </li>
            <li>
-            <a href="/users/sign-up">Sign Up</a>
+            <a href="/users/sign-up"class="sign">Sign Up</a>
            </li>
         
 
