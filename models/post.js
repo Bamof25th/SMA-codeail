@@ -8,12 +8,11 @@ const postSchema = new mongoose.Schema({
         required: true
 
     },
-     user:{
-        type : mongoose.scema.Types.ObjectId,
+    user: {
+      type:  mongoose.Schema.Types.ObjectId,
+      ref: 'User'
 
-        ref : 'User',
-
-     }
+  }
      },{
         timestamps: true
      });
