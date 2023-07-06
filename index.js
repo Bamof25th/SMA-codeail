@@ -4,6 +4,7 @@ const app = express();
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
+const flash = require('express-flash')
 //used for session cookies and authentication settings
 const session = require('express-session');
 const passport = require('passport');
@@ -29,6 +30,16 @@ app.use(express.static('./assets'));
 
 app.use(expressLayouts);
 
+//flash to send flash calls
+app.use(
+    session({
+      resave: true,
+      saveUninitialized: true,
+      secret:"i am Bam",
+      cookie: { secure: false, maxAge: 14400000 },
+    })
+);
+app.use(flash());
 
 
 // extract styles and shets from sub pages into the layout.
