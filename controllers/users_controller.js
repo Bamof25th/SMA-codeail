@@ -1,11 +1,33 @@
 const User = require("../models/user");
 
+//render the profile page of a user 
 module.exports.profile = function (req, res) {
-  return res.render("user_profile", {
-    title: "User Profile",
+  User.findById(req.params.id).then(function (user) {
+      return res.render('user_profile', {
+          title: "Profile",
+          profile_user: user
+      });
+  }).catch(function (error) {
+      req.flash('error', "Error in Finding the User in DB");
+      console.log(error);
+      return res.redirect('back');
   });
-};
+}
+module.exports.update = async function (req, res) {
+  if (req.user.id == req.params.id){
+    try {
+          let user = await User.findByIdAndUpdate(req.params.id,  req.body);
 
+          return res.redirect('back');
+
+    }
+    catch{
+         return res.status(401).send('Unauthorised');
+
+    }
+
+  }
+}
 // render the sign up page
 module.exports.signUp = function (req, res) {
   if (req.isAuthenticated()) {
