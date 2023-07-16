@@ -12,7 +12,6 @@ passport.use(new LocalStrategy({
     passReqToCallback: true // used to set req.flash vlaue
 }, function (req, email, password, done) { //find the user and establish identity after process done callback func will be called
     User.findOne({ email: email }).select('+password').then(function (user) { // email(schema) : email(user entered)
-        console.log("Here : ", user.password);
         if (!user || user.password != password) { // if user not found 
             req.flash('error', 'Invalid Username/Password !');
             return done(null, false); //done(error, Boolean Value) here its null and false as in user not found

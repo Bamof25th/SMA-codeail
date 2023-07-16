@@ -2,10 +2,9 @@
 
     <h1>Codeal/ Profile page</h1>
 
-
-<p><%= profile_user.name %></p>
-<p><%= profile_user.email %></p>
-
+    <p><%= profile_user.name %></p>
+    <p><%= profile_user.email %></p>
+    
 
 <% if(user.id == profile_user.id){%>
     <!-- if user matches then show the form -->
@@ -16,7 +15,7 @@
         </form>
     <%} else {%>
 <!-- eslse show only the profile info -->
-        <p><%= profile_user.name %></p>
-        <p><%= profile_user.name %></p>
+     <p><%= profile_user.name %></p>
+    <p><%= profile_user.email %></p>
 
        <%} %>

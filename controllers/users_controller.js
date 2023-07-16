@@ -31,7 +31,7 @@ module.exports.update = async function (req, res) {
 // render the sign up page
 module.exports.signUp = function (req, res) {
   if (req.isAuthenticated()) {
-    return res.redirect("/users/profile/" + req.user.id);
+    return res.redirect('/users/profile');
   }
 
   return res.render("user_sign_up", {
@@ -42,7 +42,7 @@ module.exports.signUp = function (req, res) {
 // render the sign in page
 module.exports.signIn = function (req, res) {
   if (req.isAuthenticated()) {
-    return res.redirect("/users/profile" );
+    return res.redirect('/users/profile' );
   }
 
   return res.render("user_sign_in", {
@@ -53,7 +53,7 @@ module.exports.signIn = function (req, res) {
 module.exports.create = function (req, res) {
   if (req.body.password != req.body.confirm_password) {
     req.flash("error", "Passwords do not match!");
-    return res.redirect("back");
+    return res.redirect('back');
   }
 
   User.findOne({ email: req.body.email })
@@ -62,21 +62,21 @@ module.exports.create = function (req, res) {
         User.create(req.body)
           .then(function (user) {
             req.flash("success", "Account Created Successfully!");
-            return res.redirect("/users/sign-in");
+            return res.redirect('/users/sign-in');
           })
           .catch(function (error) {
             req.flash("error", "Error in storing the User in DB");
             console.log(error);
-            return res.redirect("back");
+            return res.redirect('back');
           });
       } else {
-        return res.redirect("back");
+        return res.redirect('back');
       }
     })
     .catch(function (error) {
       req.flash("error", "Error in Finding the User in DB");
       console.log(error);
-      return res.redirect("back");
+      return res.redirect('back');
     });
 };
 
@@ -94,7 +94,7 @@ module.exports.destroySession = function (req, res) {
       return next(err);
     }
     req.flash("success", "Logged Out Successfully !!"); // flash message
-    return res.redirect("/");
+    return res.redirect('/');
   });
 };
 

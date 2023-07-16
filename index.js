@@ -4,13 +4,14 @@ const app = express();
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
-const flash = require('express-flash')
-//used for session cookies and authentication settings
+// used for session cookie
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo')(session);
-// const saasMiddleware = require('node-sass-middleware');
+// const sassMiddleware = require('node-sass-middleware');
+const flash = require('connect-flash');
+const customMvare = require('./config/middleware');
 
 // app.use(saasMiddleware({
 //     scr:'.assets/scss',
@@ -39,7 +40,6 @@ app.use(
       cookie: { secure: false, maxAge: 14400000 },
     })
 );
-app.use(flash());
 
 
 // extract styles and shets from sub pages into the layout.
@@ -82,6 +82,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash());
+app.use(customMvare.setFlash);
+
+
 // use express router
 app.use('/',require('./routes'))
 
