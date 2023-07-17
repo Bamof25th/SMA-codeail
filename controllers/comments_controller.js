@@ -14,6 +14,20 @@ module.exports.create = async function(req, res){
             //handle error
             post.comments.push(comment);
             post.save();
+            if (req.xhr){
+                // Similar for comments to fetch the user's id!
+                comment = await comment.populate('user', 'name').execPopulate();
+    
+                return res.status(200).json({
+                    data: {
+                        comment: comment
+                    },
+                    message: "Post created!"
+                });
+            }
+
+
+            req.flash('success', 'Comment published!');
 
             res.redirect('/');
 }
@@ -51,9 +65,9 @@ module.exports.destroy = async function(req, res){
             req.flash('error', "Unauthorized Activity: Not allowed to delete the comment");
             return res.redirect('back'); // upon failure redirect back w/o doing anything
         }
-    } catch (error) {
-        req.flash('error', "Error in Finding the Content in DB");
-        console.log(error);
+    } catch (err) {
+        req.flash('error', "Comment Removed!");
+        
         return res.redirect('back');
     };
 }

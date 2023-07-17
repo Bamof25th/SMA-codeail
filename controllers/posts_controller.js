@@ -65,5 +65,5 @@ module.exports.destroy = async function (req, res) {
         req.flash('error', "Error in Deleteing the Comment in DB");
         console.log(error);
         return res.redirect('back');
-    }
+    } 
 }
