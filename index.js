@@ -29,11 +29,14 @@ app.use(cookieParser());
 
 app.use(express.static('./assets')); 
 
+// make the uploads path  available to browser
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
 app.use(expressLayouts);
 
 //flash to send flash calls
 app.use(
-    session({
+    session({  
       resave: true,
       saveUninitialized: true,
       secret:"i am Bam",
