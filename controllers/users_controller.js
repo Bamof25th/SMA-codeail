@@ -82,27 +82,31 @@ module.exports.signIn = function(req, res){
     })
 }
 
-// get the sign up data
-module.exports.create = function(req, res){
-    if (req.body.password != req.body.confirm_password){
-        req.flash('error', 'Passwords do not match');
+// get the sign up data and create account
+module.exports.create = function (req, res) {
+    if (req.body.password != req.body.confirm_password) {
+        req.flash('error', "Passwords do not match!");
         return res.redirect('back');
     }
 
-    User.findOne({email: req.body.email}, function(err, user){
-        if(err){req.flash('error', err); return}
-
-        if (!user){
-            User.create(req.body, function(err, user){
-                if(err){req.flash('error', err); return}
-
+    User.findOne({ email: req.body.email }).then(function (user) {
+        if (!user) {
+            User.create(req.body).then(function (user) {
+                req.flash('success', "Account Created Successfully!");
                 return res.redirect('/users/sign-in');
-            })
-        }else{
-            req.flash('success', 'You have signed up, login to continue!');
+            }).catch(function (error) {
+                req.flash('error', "Error in storing the User in DB");
+                console.log(error);
+                return res.redirect('back');
+            });
+        }
+        else {
             return res.redirect('back');
         }
-
+    }).catch(function (error) {
+        req.flash('error', "Error in Finding the User in DB");
+        console.log(error);
+        return res.redirect('back');
     });
 }
 
