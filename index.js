@@ -11,17 +11,18 @@ const passportLocal = require('./config/passport-local-strategy');
 const passportJWT = require('./config/passport-jwt-strategy.js')
 const passportGoogle = require('./config/passport-google-oauth2-strategies')
 const MongoStore = require('connect-mongo')(session);
-// const sassMiddleware = require('node-sass-middleware');
+const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
 const customMvare = require('./config/middleware');
-// app.use(saasMiddleware({
-//     scr:'.assets/scss',
-//     dest: './assets/css',
-//     debug: true,
-//     outputStyle: 'extended',
-//     prefix: '/css'
 
-// }))
+app.use(sassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}));
+
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));

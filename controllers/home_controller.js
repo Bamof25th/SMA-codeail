@@ -1,48 +1,48 @@
 const Post = require('../models/post');
 const User = require('../models/user');
 
-module.exports.home = async function(req , res){
-    //return res.end('<h1>Express is up for codeial!</h1>')\
-    // console.log(req.cookies);
-    // res.cookie('user_id', 25);
-    // Post.find({}, function(err,posts){
-    //     return res.render('home',{
-    //         title: "Codeial | Home",
-    //         posts: posts
-    //     });
-    // });
 
 
-        try{
-            //populate the user of each post
-            let posts= await Post.find({})
-            .sort('-createdAt')
-            .populate('user')
-        
-            .populate({
-                path: 'comments',
-                populate: {
-                    path: 'user'
-                }
-                
-            });
-            
-            let users =await User.find({});
+module.exports.home = async function(req, res){
 
-            return res.render('home',{
-                title: "Codeial | Home",
-                posts: posts,
-                all_users: users
-            });
+    try{
+        // CHANGE :: populate the likes of each post and comment
+        let posts = await Post.find({})
+        .sort('-createdAt')
+        .populate('user')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            },
+            populate: {
+                path: 'likes'
+            }
+        }).populate('comments')
+        .populate('likes');
 
-        } catch{
-            console.log('Error', err);
-            return;
-        }
- 
-        
+    
+        let users = await User.find({});
+
+        return res.render('home', {
+            title: "Codeial | Home",
+            posts:  posts,
+            all_users: users
+        });
+
+    }catch(err){
+        console.log('Error', err);
+        return;
     }
-  
+   
+}
+
+// module.exports.actionName = function(req, res){}
 
 
-//module.exports.actionNmae = function(req ,res){}
+// using then
+// Post.find({}).populate('comments').then(function());
+
+// let posts = Post.find({}).populate('comments').exec();
+
+// posts.then()

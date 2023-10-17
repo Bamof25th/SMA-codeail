@@ -1,23 +1,10 @@
-.home-conatiner{
-
-    display : flex;
-
-}
-
-
- #feed-post{
-      
-        width: 70%;
-        padding: 10px;
-        height: fit-content;
-    }
-    
-  #user-friends{
-      
-        width: 30%;
-        padding: 10px;
-        border-left: 10px  solid #9ad4fb;
-        height: 100%;
-    }
-
- 
+#home-container {
+  display: flex; }
+  #home-container #feed-posts {
+    width: 70%;
+    padding: 10px; }
+  #home-container #user-friends {
+    width: 30%;
+    padding: 10px;
+    border-left: 1px solid lightgrey;
+    height: 100%; }
